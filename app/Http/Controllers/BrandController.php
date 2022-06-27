@@ -18,7 +18,14 @@ class BrandController extends Controller
      */
     public function index()
     {
-        return view ('Brand.brands');
+        $brand = DB::table('brands')
+            ->join('sub_categories','sub_categories.subcategory_id','=','brands.subcategory_id')
+            ->join('categories','categories.category_id','=','brands.category_id')
+            ->get();
+
+
+
+      return view ('Brand.brands',['brands'=>$brand]);
     }
 
     /**
