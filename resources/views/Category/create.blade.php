@@ -29,6 +29,8 @@
                                     <div class="mb-4">
                                         <label for="form-category/name" class="form-label">Name</label>
                                         <input type="text" name="category_name" class="form-control" id="form-category/name"/>
+
+                                        <input type="hidden" name="type" value="{{app('request')->input('type')}}">
                                     </div>
 
 {{--                                    <div class="mb-4">--}}

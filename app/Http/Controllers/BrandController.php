@@ -16,16 +16,16 @@ class BrandController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $brand = DB::table('brands')
-            ->join('sub_categories','sub_categories.subcategory_id','=','brands.subcategory_id')
-            ->join('categories','categories.category_id','=','brands.category_id')
+        $type = $request->query('type');
+        $brand = DB::table('brands')->where('brand_type',$type)
             ->get();
+        return view ('Brands.brands',['brands'=>$brand]);
+    }
 
+    public function mobileBrand(){
 
-
-      return view ('Brand.brands',['brands'=>$brand]);
     }
 
     /**
@@ -37,10 +37,7 @@ class BrandController extends Controller
     {
         $sub_category = SubCategory::all();
         $category = Category::all();
-
-
-
-   return view('Brand.create',['categories'=>$category],['sub_categories'=>$sub_category]);
+   return view('Brands.create',['categories'=>$category],['sub_categories'=>$sub_category]);
     }
 
     /**
@@ -54,8 +51,6 @@ class BrandController extends Controller
         $validate = $request->validate([
             'brand_name' => 'required|unique:brands|max:255',
             'description'=> 'required',
-            'subcategory_id'=>'required',
-            'category_id'=> 'required',
             'images'=>'required',
         ]);
         $image = $request->file('images');
@@ -69,13 +64,15 @@ class BrandController extends Controller
         Brand::create([
            'brand_name' => $request->brand_name,
            'description' => $request->description,
-            'subcategory_id'=> $request->subcategory_id,
-            'category_id'=> $request->category_id,
             'brand_image'=> $final_name,
+            'brand_type'=>$request->type,
             'created_at' => Carbon::now()
         ]);
 
-        return redirect()->route('view.brands')->with('success','Brand Added Successfully');
+        return redirect()->route('view.brands')->with('success','Brands Added Successfully');
+
+
+
 
 
     }
@@ -100,7 +97,7 @@ class BrandController extends Controller
     public function edit(Brand $brand)
     {
 
-        return view('Brand.edit');
+        return view('Brands.edit');
     }
 
     /**

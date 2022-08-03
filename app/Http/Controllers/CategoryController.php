@@ -14,10 +14,12 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-       $categories = Category::all();
-       return view('Category.categories',['categories'=>$categories]);
+    $type = $request->query('type');
+
+        $categories = DB::table('categories')->where('type',$type)->get();
+        return view('Category.categories',['categories'=>$categories]);
     }
 
     /**
@@ -46,6 +48,7 @@ class CategoryController extends Controller
       $category = Category::create([
           'category_name'=>$request->category_name,
           'description'=> $request->description,
+          'type'=> $request->type,
           'created_at'=>Carbon::now()
       ]);
 

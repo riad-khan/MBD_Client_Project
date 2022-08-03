@@ -36,8 +36,7 @@
                             </th>
                             <th class="min-w-15x">Name</th>
                             <th class="min-w-15x">Image</th>
-                            <th class="min-w-15x">Parent Category</th>
-                            <th class="min-w-15x">Sub Category</th>
+
                             <th>Created at</th>
                             <th>Visibility</th>
                             <th class="w-min" data-orderable="false"></th>
@@ -52,8 +51,6 @@
                                 <td><a href="app-category.html" class="text-reset">{{ $brand->brand_name  }}</a></td>
                                 <td><img style="height: 50px;width: 120px;" src="{{env('APP_URL').$brand->brand_image}}"></td>
 
-                                <td><a href="app-category.html" class="text-reset">{{ $brand->category_name }}</a></td>
-                                <td><a href="app-category.html" class="text-reset">{{ $brand->subcategory_name }}</a></td>
                                 <td>{{ \Carbon\Carbon::parse($brand->created_at)->format('d/m/Y')}}</td>
                                 <td><div class="badge badge-sa-success">Visible</div></td>
 
@@ -75,10 +72,10 @@
                                             </svg>
                                         </button>
                                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="category-context-menu-0">
-                                            <li><a class="dropdown-item" href="{{url('/admin/edit-sub_category/'.$brand->subcategory_id)}}">Edit</a></li>
+                                            <li><a class="dropdown-item" href="{{url('/admin/edit-sub_category/'.$brand->brand_id)}}">Edit</a></li>
 
                                             <li><hr class="dropdown-divider" /></li>
-                                            <li><a class="dropdown-item text-danger" href="{{url('/admin/delete-sub_category/'.$brand->subcategory_id)}}">Delete</a></li>
+                                            <li><a class="dropdown-item text-danger" href="{{url('/admin/delete-sub_category/'.$brand->brand_id)}}">Delete</a></li>
                                         </ul>
                                     </div>
                                 </td>
